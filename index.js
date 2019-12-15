@@ -35,8 +35,10 @@ app.get('/commonvoice/getVoicesByWord/:word', function(req, res) {
   if (typeof commonvoice_sentences[req.params.word] === 'object') {
 
     let voices_by_word = {};
-    commonvoice_sentences[req.params.word].forEach(function(element) {
-      voices_by_word[element] = commonvoice_voices[element];
+    commonvoice_sentences[req.params.word].forEach(function(sentence) {
+      if (sentence) {
+        voices_by_word[sentence] = commonvoice_voices[sentence];
+      }
     })
     result = {
       data: voices_by_word
