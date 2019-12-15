@@ -1,5 +1,4 @@
 # Dictionary API
-==============
 
 ## Installation
 
