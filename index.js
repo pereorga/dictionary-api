@@ -2,7 +2,7 @@ const express = require("express");
 const fs = require('fs');
 
 const port = 3000;
-const commonvoice = JSON.parse(fs.readFileSync('data/commonvoice.json'));
+const commonvoice = JSON.parse(fs.readFileSync(__dirname + '/data/commonvoice.json'));
 const app = express();
 
 let result = {

@@ -12,7 +12,7 @@ const uncapitalize = function (s) {
   return s.trim().charAt(0).toLowerCase() + s.slice(1);
 }
 
-fs.createReadStream('source/commonvoice/validated.tsv')
+fs.createReadStream(__dirname + '/source/commonvoice/validated.tsv')
   .pipe(csv({ separator: '\t' }))
   .on('data', (data) => results.push(data))
   .on('end', () => {
@@ -82,6 +82,6 @@ fs.createReadStream('source/commonvoice/validated.tsv')
       }
     }
 
-    fs.writeFileSync("data/commonvoice.json", JSON.stringify(dict));
-    //fs.writeFileSync("commonvoice.json", JSON.stringify(dict, null, " "));
+    fs.writeFileSync(__dirname + "/data/commonvoice.json", JSON.stringify(dict));
+    //fs.writeFileSync(__dirname + "/commonvoice.json", JSON.stringify(dict, null, " "));
   });
