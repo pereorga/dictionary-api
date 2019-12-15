@@ -2,8 +2,8 @@ const csv = require('csv-parser')
 const fs = require('fs')
 const results = [];
 
-var dict = {};
-var paraules = [];
+var paraules = {};
+var frases = {};
 
 const uncapitalize = function (s) {
   if (typeof s !== 'string') {
@@ -19,7 +19,10 @@ fs.createReadStream(__dirname + '/source/commonvoice/validated.tsv')
 
     results.forEach(function(fila) {
 
+      var frase = fila.sentence;
+
       // Clean input file from uneeded stuff.
+      delete fila['sentence'];
       delete fila['client_id'];
       delete fila['age'];
       if (fila['accent'] === 'other') {
@@ -29,10 +32,10 @@ fs.createReadStream(__dirname + '/source/commonvoice/validated.tsv')
         fila['gender'] = '';
       }
 
-      var paraules = fila.sentence.split(/[ .:;?!~,`"'«»&|()<>{}\[\]\t\r\n/\\]+/);
+      var mots = frase.split(/[ .:;?!~,`"'«»&|()<>{}\[\]\t\r\n/\\]+/);
 
       var start_sentence = true;
-      paraules.forEach(function(paraula) {
+      mots.forEach(function(paraula) {
         if (paraula && paraula.length > 1) {
 
           if (start_sentence) {
@@ -43,20 +46,35 @@ fs.createReadStream(__dirname + '/source/commonvoice/validated.tsv')
             var paraula = uncapitalize(paraula);
           }
 
-          if (typeof dict[paraula] !== 'object') {
-            dict[paraula] = [];
+          if (typeof paraules[paraula] !== 'object') {
+            paraules[paraula] = [];
           }
 
+          // Keep only 10 sentences per word.
+          if (!paraules[paraula].includes(frase)) {
+            if (paraules[paraula].length < 10) {
+              paraules[paraula].push(frase);
+            }
+            else {
+              paraules[paraula][Math.floor(Math.random() * paraules[paraula].length)] = frase;
+            }
+          }
+
+          // Store sentences.
+          if (typeof frases[frase] !== 'object') {
+            frases[frase] = [];
+
+          }
           var existing = false;
           var replaced = false;
-          for (var i  = 0; i < dict[paraula].length && !replaced; i++) {
-            if (dict[paraula][i].gender === fila.gender && dict[paraula][i].accent === fila.accent) {
+          for (var i = 0; i < frases[frase].length && !replaced; i++) {
+            if (frases[frase][i].gender === fila.gender && frases[frase][i].accent === fila.accent) {
               existing = true;
 
-              if (dict[paraula][i].up_votes - dict[paraula][i].down_votes < fila.up_votes - fila.down_votes) {
+              if (frases[frase][i].up_votes - frases[frase][i].down_votes < fila.up_votes - fila.down_votes) {
 
                 // Better sentence found for that gender and accent.
-                dict[paraula][i] = fila;
+                frases[frase][i] = fila;
                 replaced = true;
               }
             }
@@ -64,24 +82,26 @@ fs.createReadStream(__dirname + '/source/commonvoice/validated.tsv')
           if (!existing) {
 
             // First occurrence for this gender and accent.
-            dict[paraula].push(fila);
+            delete fila['sentence'];
+            frases[frase][i] = fila;
           }
         }
-
       })
     });
 
     // Remove votes.
-    for (var property in dict) {
-      if (dict.hasOwnProperty(property)) {
-        for (var i  = 0; i < dict[property].length; i++) {
+    for (var property in frases) {
+      if (frases.hasOwnProperty(property)) {
+        for (var i  = 0; i < frases[property].length; i++) {
 
-          //delete dict[property][i]['up_votes'];
-          //delete dict[property][i]['down_votes'];
+          delete frases[property][i]['up_votes'];
+          delete frases[property][i]['down_votes'];
         }
       }
     }
 
-    fs.writeFileSync(__dirname + "/data/commonvoice.json", JSON.stringify(dict));
-    //fs.writeFileSync(__dirname + "/commonvoice.json", JSON.stringify(dict, null, " "));
+    //fs.writeFileSync(__dirname + "/data/commonvoice_voices.json", JSON.stringify(paraules));
+    //fs.writeFileSync(__dirname + "/data/commonvoice_sentences.json", JSON.stringify(frases));
+    fs.writeFileSync(__dirname + "/data/commonvoice_voices.json", JSON.stringify(frases, null, " "));
+    fs.writeFileSync(__dirname + "/data/commonvoice_sentences.json", JSON.stringify(paraules, null, " "));
   });
