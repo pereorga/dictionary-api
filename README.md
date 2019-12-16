@@ -9,10 +9,67 @@ node index.js
 
 ## Examples
 
+### Get results for a word in all sources.
+
+```
+$ curl --silent http://localhost:3000/all/getUrlsByWord/genial | jq
+{
+  "data": {
+    "gdlc": [
+      "https://www.enciclopedia.cat/ec-gdlc-e00069453.xml"
+    ],
+    "commonvoice": {
+      "Em sembla genial que l'hagis coneguda a Tinder!": [
+        {
+          "path": "common_voice_ca_17852717.mp3",
+          "gender": "",
+          "accent": ""
+        },
+        {
+          "path": "common_voice_ca_17944699.mp3",
+          "gender": "female",
+          "accent": "central"
+        },
+        {
+          "path": "common_voice_ca_18084960.mp3",
+          "gender": "male",
+          "accent": "central"
+        },
+        {
+          "path": "common_voice_ca_18013966.mp3",
+          "gender": "",
+          "accent": "central"
+        }
+      ],
+      "Genial!": [
+        {
+          "path": "common_voice_ca_17647455.mp3",
+          "gender": "female",
+          "accent": "central"
+        }
+      ],
+      "Genial.": [
+        {
+          "path": "common_voice_ca_17491551.mp3",
+          "gender": "female",
+          "accent": "northwestern"
+        },
+        {
+          "path": "common_voice_ca_17584039.mp3",
+          "gender": "female",
+          "accent": "central"
+        }
+      ]
+    }
+  }
+}
+
+```
+
 ### Gran Diccionari de la Llengua Catalana
 
 ```
-$ curl --silent http://localhost:3000/gdlc/getUrls/exemple | jq
+$ curl --silent http://localhost:3000/gdlc/getUrlsByWord/exemple | jq
 {
   "data": [
     "https://www.enciclopedia.cat/ec-gdlc-e00060886.xml"
