@@ -4,6 +4,7 @@ const fs = require('fs');
 const port = 3000;
 const commonvoice_sentences = JSON.parse(fs.readFileSync(__dirname + '/data/commonvoice_sentences.json'));
 const commonvoice_voices = JSON.parse(fs.readFileSync(__dirname + '/data/commonvoice_voices.json'));
+const gdlc_words = JSON.parse(fs.readFileSync(__dirname + '/data/gdlc_words.json'));
 const app = express();
 
 let result = {
@@ -81,6 +82,22 @@ app.get('/commonvoice/searchVoices/:word', function(req, res) {
   }
   result = {
     data: search_result
+  };
+  res.send(result);
+});
+
+app.get('/gdlc/getUrls/:word', function(req, res) {
+
+  let urls = [];
+  if (typeof gdlc_words[req.params.word] === 'object') {
+    gdlc_words[req.params.word].forEach(function(id) {
+      if (id) {
+        urls.push('https://www.enciclopedia.cat/' + id.toLowerCase() + '.xml');
+      }
+    })
+  }
+  result = {
+    data: urls
   };
   res.send(result);
 });

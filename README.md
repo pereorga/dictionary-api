@@ -9,6 +9,28 @@ node index.js
 
 ## Examples
 
+### Gran Diccionari de la Llengua Catalana
+
+```
+$ curl --silent http://localhost:3000/gdlc/getUrls/exemple | jq
+{
+  "data": [
+    "https://www.enciclopedia.cat/ec-gdlc-e00060886.xml"
+  ]
+}
+```
+
+```
+$ curl --silent http://localhost:3000/gdlc/getUrls/fer | jq
+{
+  "data": [
+    "https://www.enciclopedia.cat/ec-gdlc-e00063208.xml",
+    "https://www.enciclopedia.cat/ec-gdlc-e00165112.xml",
+    "https://www.enciclopedia.cat/ec-gdlc-e00063275.xml"
+  ]
+}
+```
+
 ### CommonVoice
 
 ```
