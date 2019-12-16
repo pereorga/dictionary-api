@@ -78,7 +78,7 @@ $ curl --silent http://localhost:3000/gdlc/getUrlsByWord/exemple | jq
 ```
 
 ```
-$ curl --silent http://localhost:3000/gdlc/getUrls/fer | jq
+$ curl --silent http://localhost:3000/gdlc/getUrlsByWord/fer | jq
 {
   "data": [
     "https://www.enciclopedia.cat/ec-gdlc-e00063208.xml",
