@@ -10,22 +10,22 @@ const app = express();
 
 function commonvoice_getSentences(word) {
 
-  let data = [];
+  let sentences = [];
   if (typeof commonvoice_sentences[word] === 'object') {
-    data = commonvoice_sentences[word]
+    sentences = commonvoice_sentences[word]
   }
 
-  return data;
+  return sentences;
 }
 
 function commonvoice_getVoicesBySentence(sentence) {
 
-  let data = [];
+  let voices = [];
   if (typeof commonvoice_voices[sentence] === 'object') {
-    data = commonvoice_voices[sentence]
+    voices = commonvoice_voices[sentence]
   }
 
-  return data;
+  return voices;
 }
 
 function commonvoice_getVoicesByWord(word) {
@@ -73,6 +73,7 @@ function commonvoice_searchVoices(word) {
 }
 
 function gdlc_getUrlsByWord(word) {
+
   let urls = [];
   if (typeof gdlc_words[word] === 'object') {
     gdlc_words[word].forEach(function(id) {
@@ -115,8 +116,8 @@ app.get('/commonvoice/getVoicesByWord/:word', function(req, res) {
 
 app.get('/commonvoice/searchSentences/:word', function(req, res) {
 
-  let search_result = commonvoice_searchSentences(req.params.word);
-  res.send({data: search_result});
+  let sentences = commonvoice_searchSentences(req.params.word);
+  res.send({data: sentences});
 });
 
 app.get('/commonvoice/searchVoices/:word', function(req, res) {
@@ -126,16 +127,19 @@ app.get('/commonvoice/searchVoices/:word', function(req, res) {
 });
 
 app.get('/gdlc/getUrlsByWord/:word', function(req, res) {
+
   let urls = gdlc_getUrlsByWord(req.params.word);
   res.send({data: urls});
 });
 
 app.get('/all/getUrlsByWord/:word', function(req, res) {
+
   let urls = all_getUrlsByWord(req.params.word);
   res.send({data: urls});
 });
 
 
 app.listen(port, function () {
+
   console.log("Listening on port " + port + "...");
 });
