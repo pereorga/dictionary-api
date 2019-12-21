@@ -5,6 +5,9 @@ const results = [];
 var paraules = {};
 var frases = {};
 
+var languagetool_text = fs.readFileSync(__dirname + '/source/languagetool/majuscules.txt', 'utf8');
+var majuscules = languagetool_text.split("\n");
+
 const uncapitalize = function (s) {
   if (typeof s !== 'string') {
     return '';
@@ -42,8 +45,10 @@ fs.createReadStream(__dirname + '/source/commonvoice/validated.tsv')
 
             start_sentence = false;
 
-            // TODO: Do not try to uncapitalize if word exists in LanguageTool?
-            var paraula = uncapitalize(paraula);
+            // Uncapitalize word if does not exist in LanguageTool.
+            if (!majuscules.includes(paraula)) {
+              paraula = uncapitalize(paraula);
+            }
           }
 
           if (typeof paraules[paraula] !== 'object') {
@@ -55,9 +60,9 @@ fs.createReadStream(__dirname + '/source/commonvoice/validated.tsv')
             if (paraules[paraula].length < 10) {
               paraules[paraula].push(frase);
             }
-            else {
-              paraules[paraula][Math.floor(Math.random() * paraules[paraula].length)] = frase;
-            }
+            //else {
+            //  paraules[paraula][Math.floor(Math.random() * paraules[paraula].length)] = frase;
+            //}
           }
 
           // Store sentences.
