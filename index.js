@@ -5,6 +5,7 @@ const port = 3000;
 const commonvoice_sentences = JSON.parse(fs.readFileSync(__dirname + '/data/commonvoice_sentences.json'));
 const commonvoice_voices = JSON.parse(fs.readFileSync(__dirname + '/data/commonvoice_voices.json'));
 const gdlc_words = JSON.parse(fs.readFileSync(__dirname + '/data/gdlc_words.json'));
+const diec_words = JSON.parse(fs.readFileSync(__dirname + '/data/diec_words.json'));
 const app = express();
 
 
@@ -86,9 +87,20 @@ function gdlc_getUrlsByWord(word) {
   return urls;
 }
 
+function diec_getUrlsByWord(word) {
+
+  let urls = [];
+  if (typeof gdlc_words[word] !== 'undefined' && gdlc_words[word]) {
+    urls.push('https://dlc.iec.cat/results.asp?txtEntrada=' + word + '&operEntrada=0');
+  }
+
+  return urls;
+}
+
 function all_getUrlsByWord(word) {
 
   let urls = {};
+  urls['diec'] = diec_getUrlsByWord(word);
   urls['gdlc'] = gdlc_getUrlsByWord(word);
   urls['commonvoice'] = commonvoice_getVoicesByWord(word);
 
@@ -124,6 +136,12 @@ app.get('/commonvoice/searchVoices/:word', function(req, res) {
 
   let voices = commonvoice_searchVoices(req.params.word);
   res.send({data: voices});
+});
+
+app.get('/diec/getUrlsByWord/:word', function(req, res) {
+
+  let urls = diec_getUrlsByWord(req.params.word);
+  res.send({data: urls});
 });
 
 app.get('/gdlc/getUrlsByWord/:word', function(req, res) {
