@@ -21,6 +21,9 @@ $ curl --silent http://localhost:3000/all/getUrlsByWord/genial | jq
     "gdlc": [
       "https://www.enciclopedia.cat/ec-gdlc-e00069453.xml"
     ],
+    "dcvb": [
+      "https://dcvb.iec.cat/results.asp?word=genial"
+    ],
     "commonvoice": {
       "Em sembla genial que l'hagis coneguda a Tinder!": [
         {
@@ -69,7 +72,7 @@ $ curl --silent http://localhost:3000/all/getUrlsByWord/genial | jq
 
 ```
 
-### Diccionari de la llengua catalana de l'IEC
+### Diccionari de la llengua catalana de l'IEC (DIEC)
 
 ```
 $ curl --silent http://localhost:3000/diec/getUrlsByWord/exemple | jq
@@ -80,7 +83,14 @@ $ curl --silent http://localhost:3000/diec/getUrlsByWord/exemple | jq
 }
 ```
 
-### Gran Diccionari de la Llengua Catalana
+```
+$ curl --silent http://localhost:3000/diec/getUrlsByWord/motinexistent | jq
+{
+  "data": []
+}
+```
+
+### Gran Diccionari de la Llengua Catalana (GDLC)
 
 ```
 $ curl --silent http://localhost:3000/gdlc/getUrlsByWord/exemple | jq
@@ -100,6 +110,18 @@ $ curl --silent http://localhost:3000/gdlc/getUrlsByWord/fer | jq
     "https://www.enciclopedia.cat/ec-gdlc-e00063275.xml"
   ]
 }
+```
+
+### Diccionari català-valencià-balear (DCVB)
+
+```
+$ curl --silent http://localhost:3000/dcvb/getUrlsByWord/estevanet | jq
+{
+  "data": [
+    "https://dcvb.iec.cat/results.asp?word=estevanet"
+  ]
+}
+
 ```
 
 ### CommonVoice
