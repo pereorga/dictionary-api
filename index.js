@@ -92,7 +92,7 @@ function gdlc_getUrlsByWord(word) {
 function diec_getUrlsByWord(word) {
 
   let urls = [];
-  if (typeof gdlc_words[word] !== 'undefined' && gdlc_words[word]) {
+  if (typeof gdlc_words[word] !== 'undefined') {
     urls.push('https://dlc.iec.cat/results.asp?txtEntrada=' + word + '&operEntrada=0');
   }
 
@@ -102,7 +102,9 @@ function diec_getUrlsByWord(word) {
 function dcvb_getUrlsByWord(word) {
 
   let urls = [];
-  if (typeof dcvb_words[word] !== 'undefined' && dcvb_words[word]) {
+
+  // DCVB is case-insensitive unfortunately.
+  if (typeof dcvb_words[word.toLowerCase()] !== 'undefined') {
     urls.push('https://dcvb.iec.cat/results.asp?word=' + word);
   }
 
