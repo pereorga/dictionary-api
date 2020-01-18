@@ -16,7 +16,7 @@ $ curl --silent http://localhost:3000/all/getUrlsByWord/genial | jq
 {
   "data": {
     "diec": [
-      "https://dlc.iec.cat/results.asp?txtEntrada=genial&operEntrada=0"
+      "https://dlc.iec.cat/Results?DecEntradaText=genial"
     ],
     "gdlc": [
       "https://www.enciclopedia.cat/ec-gdlc-e00069453.xml"
@@ -78,7 +78,7 @@ $ curl --silent http://localhost:3000/all/getUrlsByWord/genial | jq
 $ curl --silent http://localhost:3000/diec/getUrlsByWord/exemple | jq
 {
   "data": [
-    "https://dlc.iec.cat/results.asp?txtEntrada=exemple&operEntrada=0"
+    "https://dlc.iec.cat/Results?DecEntradaText=exemple"
   ]
 }
 ```
