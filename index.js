@@ -92,8 +92,8 @@ function gdlc_getUrlsByWord(word) {
 function diec_getUrlsByWord(word) {
 
   let urls = [];
-  if (typeof gdlc_words[word] !== 'undefined') {
-    urls.push('https://dlc.iec.cat/results.asp?txtEntrada=' + word + '&operEntrada=0');
+  if (typeof diec_words[word] !== 'undefined') {
+    urls.push('https://dlc.iec.cat/Results?DecEntradaText=' + word);
   }
 
   return urls;
