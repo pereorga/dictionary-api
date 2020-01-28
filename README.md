@@ -16,13 +16,22 @@ $ curl --silent http://localhost:3000/all/getUrlsByWord/genial | jq
 {
   "data": {
     "diec": [
-      "https://dlc.iec.cat/Results?DecEntradaText=genial"
+      {
+        "title": "<span class=\"title\">genial </span>",
+        "url": "https://dlc.iec.cat/Results?DecEntradaText=genial"
+      }
     ],
     "gdlc": [
-      "https://www.enciclopedia.cat/ec-gdlc-e00069453.xml"
+      {
+        "title": "<span type=\"DIEC_2nd_ed\" class=\"ptr\" title>&#x25A0;</span> genial",
+        "url": "https://www.enciclopedia.cat/ec-gdlc-e00069453.xml"
+      }
     ],
     "dcvb": [
-      "https://dcvb.iec.cat/results.asp?word=genial"
+      {
+        "title": "genial",
+        "url": "https://dcvb.iec.cat/results.asp?word=genial"
+      }
     ],
     "commonvoice": {
       "Em sembla genial que l'hagis coneguda a Tinder!": [
@@ -69,7 +78,6 @@ $ curl --silent http://localhost:3000/all/getUrlsByWord/genial | jq
     }
   }
 }
-
 ```
 
 ### Diccionari de la llengua catalana de l'IEC (DIEC)
@@ -78,7 +86,10 @@ $ curl --silent http://localhost:3000/all/getUrlsByWord/genial | jq
 $ curl --silent http://localhost:3000/diec/getUrlsByWord/exemple | jq
 {
   "data": [
-    "https://dlc.iec.cat/Results?DecEntradaText=exemple"
+    {
+      "title": "<span class=\"title\">exemple </span>",
+      "url": "https://dlc.iec.cat/Results?DecEntradaText=exemple"
+    }
   ]
 }
 ```
@@ -96,7 +107,10 @@ $ curl --silent http://localhost:3000/diec/getUrlsByWord/motinexistent | jq
 $ curl --silent http://localhost:3000/gdlc/getUrlsByWord/exemple | jq
 {
   "data": [
-    "https://www.enciclopedia.cat/ec-gdlc-e00060886.xml"
+    {
+      "title": "<span type=\"DIEC_2nd_ed\" class=\"ptr\" title>&#x25A0;</span> exemple",
+      "url": "https://www.enciclopedia.cat/ec-gdlc-e00060886.xml"
+    }
   ]
 }
 ```
@@ -105,9 +119,18 @@ $ curl --silent http://localhost:3000/gdlc/getUrlsByWord/exemple | jq
 $ curl --silent http://localhost:3000/gdlc/getUrlsByWord/fer | jq
 {
   "data": [
-    "https://www.enciclopedia.cat/ec-gdlc-e00063208.xml",
-    "https://www.enciclopedia.cat/ec-gdlc-e00165112.xml",
-    "https://www.enciclopedia.cat/ec-gdlc-e00063275.xml"
+    {
+      "title": "<span type=\"DIEC_2nd_ed\" class=\"ptr\" title>&#x25A0;</span> fer <sup class=\"homograph\">1</sup>",
+      "url": "https://www.enciclopedia.cat/ec-gdlc-e00063208.xml"
+    },
+    {
+      "title": "fer <sup class=\"homograph\">2</sup>",
+      "url": "https://www.enciclopedia.cat/ec-gdlc-e00165112.xml"
+    },
+    {
+      "title": "<span type=\"DIEC_2nd_ed\" class=\"ptr\" title>&#x25A0;</span> fer <sup class=\"homograph\">3</sup> | fera",
+      "url": "https://www.enciclopedia.cat/ec-gdlc-e00063275.xml"
+    }
   ]
 }
 ```
@@ -118,10 +141,12 @@ $ curl --silent http://localhost:3000/gdlc/getUrlsByWord/fer | jq
 $ curl --silent http://localhost:3000/dcvb/getUrlsByWord/estevanet | jq
 {
   "data": [
-    "https://dcvb.iec.cat/results.asp?word=estevanet"
+    {
+      "title": "estevanet",
+      "url": "https://dcvb.iec.cat/results.asp?word=estevanet"
+    }
   ]
 }
-
 ```
 
 ### CommonVoice

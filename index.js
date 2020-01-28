@@ -79,9 +79,9 @@ function gdlc_getUrlsByWord(word) {
 
   let urls = [];
   if (typeof gdlc_words[word] === 'object') {
-    gdlc_words[word].forEach(function(id) {
-      if (id) {
-        urls.push('https://www.enciclopedia.cat/' + id.toLowerCase() + '.xml');
+    gdlc_words[word].forEach(function(obj) {
+      if (obj) {
+        urls.push({title: obj.title, url: 'https://www.enciclopedia.cat/' + obj.id.toLowerCase() + '.xml'});
       }
     });
   }
@@ -92,8 +92,12 @@ function gdlc_getUrlsByWord(word) {
 function diec_getUrlsByWord(word) {
 
   let urls = [];
-  if (typeof diec_words[word] !== 'undefined') {
-    urls.push('https://dlc.iec.cat/Results?DecEntradaText=' + word);
+  if (typeof diec_words[word] === 'object') {
+    diec_words[word].forEach(function(obj) {
+      if (obj) {
+        urls.push({title: obj.title, url: 'https://dlc.iec.cat/Results?DecEntradaText=' + word});
+      }
+    });
   }
 
   return urls;
@@ -104,8 +108,14 @@ function dcvb_getUrlsByWord(word) {
   let urls = [];
 
   // DCVB is case-insensitive unfortunately.
-  if (typeof dcvb_words[word.toLowerCase()] !== 'undefined') {
-    urls.push('https://dcvb.iec.cat/results.asp?word=' + word);
+  let word_lc = word.toLowerCase();
+
+  if (typeof dcvb_words[word_lc] === 'object') {
+    dcvb_words[word_lc].forEach(function(obj) {
+      if (obj) {
+        urls.push({title: obj.title, url: 'https://dcvb.iec.cat/results.asp?word=' + word});
+      }
+    });
   }
 
   return urls;
