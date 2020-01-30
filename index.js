@@ -132,6 +132,12 @@ function all_getUrlsByWord(word) {
   return urls;
 }
 
+app.use(function(req, res, next) {
+  res.setHeader('charset', 'utf-8');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 // Routes.
 app.get('/commonvoice/getSentences/:word', function(req, res) {
 
