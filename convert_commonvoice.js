@@ -1,9 +1,9 @@
-const csv = require('csv-parser')
-const fs = require('fs')
+const csv = require('csv-parser');
+const fs = require('fs');
 const results = [];
 
-var paraules = {};
-var frases = {};
+var paraules = Object.create(null);
+var frases = Object.create(null);
 
 const languagetool_text = fs.readFileSync(__dirname + '/source/languagetool/majuscules.txt', 'utf8');
 const majuscules = new Set(languagetool_text.split("\n"));
@@ -96,12 +96,9 @@ fs.createReadStream(__dirname + '/source/commonvoice/validated.tsv')
 
     // Remove votes.
     for (var property in frases) {
-      if (frases.hasOwnProperty(property)) {
         for (var i  = 0; i < frases[property].length; i++) {
-
-          delete frases[property][i]['up_votes'];
-          delete frases[property][i]['down_votes'];
-        }
+        delete frases[property][i]['up_votes'];
+        delete frases[property][i]['down_votes'];
       }
     }
 

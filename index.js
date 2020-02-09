@@ -1,11 +1,11 @@
 const express = require("express");
 const fs = require('fs');
 
-const commonvoice_sentences = JSON.parse(fs.readFileSync(__dirname + '/data/commonvoice_sentences.json'));
-const commonvoice_voices = JSON.parse(fs.readFileSync(__dirname + '/data/commonvoice_voices.json'));
-const gdlc_words = JSON.parse(fs.readFileSync(__dirname + '/data/gdlc_words.json'));
-const diec_words = JSON.parse(fs.readFileSync(__dirname + '/data/diec_words.json'));
-const dcvb_words = JSON.parse(fs.readFileSync(__dirname + '/data/dcvb_words.json'));
+const commonvoice_sentences = Object.assign(Object.create(null), JSON.parse(fs.readFileSync(__dirname + '/data/commonvoice_sentences.json')));
+const commonvoice_voices = Object.assign(Object.create(null), JSON.parse(fs.readFileSync(__dirname + '/data/commonvoice_voices.json')));
+const gdlc_words = Object.assign(Object.create(null), JSON.parse(fs.readFileSync(__dirname + '/data/gdlc_words.json')));
+const diec_words = Object.assign(Object.create(null), JSON.parse(fs.readFileSync(__dirname + '/data/diec_words.json')));
+const dcvb_words = Object.assign(Object.create(null), JSON.parse(fs.readFileSync(__dirname + '/data/dcvb_words.json')));
 
 const app = express();
 const port = 3000;
@@ -34,7 +34,7 @@ function commonvoice_getVoicesBySentence(sentence) {
 function commonvoice_getVoicesByWord(word) {
 
   let sentences = commonvoice_getSentences(word);
-  let voices = {};
+  let voices = Object.create(null);
   sentences.forEach(function(sentence) {
     if (sentence) {
       voices[sentence] = commonvoice_getVoicesBySentence(sentence);
@@ -46,7 +46,7 @@ function commonvoice_getVoicesByWord(word) {
 
 function commonvoice_searchSentences(word) {
 
-  let search_result = {};
+  let search_result = Object.create(null);
   for (let w in commonvoice_sentences) {
     if (w && w.indexOf(word) !== -1) {
       search_result[w] = commonvoice_sentences[w];
@@ -57,14 +57,14 @@ function commonvoice_searchSentences(word) {
 
 function commonvoice_searchVoices(word) {
 
-  let search_result = {};
+  let search_result = Object.create(null);
   for (let w in commonvoice_sentences) {
     if (w && w.indexOf(word) !== -1) {
-      search_result[w] = {};
+      search_result[w] = Object.create(null);
       commonvoice_sentences[w].forEach(function(sentence) {
         if (sentence) {
           if (typeof search_result[w][sentence] !== 'object') {
-            search_result[w][sentence] = {};
+            search_result[w][sentence] = Object.create(null);
           }
           search_result[w][sentence] = commonvoice_voices[sentence];
         }
@@ -123,7 +123,7 @@ function dcvb_getUrlsByWord(word) {
 
 function all_getUrlsByWord(word) {
 
-  let urls = {};
+  let urls = Object.create(null);
   urls['diec'] = diec_getUrlsByWord(word);
   urls['gdlc'] = gdlc_getUrlsByWord(word);
   urls['dcvb'] = dcvb_getUrlsByWord(word);
